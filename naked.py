@@ -3,14 +3,14 @@ import json
 import datetime
 import time
 import yaml
-
+#Importing datetime class
 from datetime import datetime
 print('Asteroid processing service')
 
 # Initiating and reading config values
 print('Loading configuration from file')
 
-# 
+#Links to nasa apy_key and api_url
 nasa_api_key ="lFM6hbD1RurthCChzg15gUlnRpud7aX9O560vwey"
 nasa_api_url = "https://api.nasa.gov/neo/"
 
@@ -19,21 +19,21 @@ dt = datetime.now()
 request_date = str(dt.year) + "-" + str(dt.month).zfill(2) + "-" + str(dt.day).zfill(2)  
 print("Generated today's date: " + str(request_date))
 
-
+#Requesting info from NASA api
 print("Request url: " + str(nasa_api_url + "rest/v1/feed?start_date=" + request_date + "&end_date=" + request_date + "&api_key=" + nasa_api_key))
 r = requests.get(nasa_api_url + "rest/v1/feed?start_date=" + request_date + "&end_date=" + request_date + "&api_key=" + nasa_api_key)
-
+#Printing NASA request response data
 print("Response status code: " + str(r.status_code))
 print("Response headers: " + str(r.headers))
 print("Response content: " + str(r.text))
-
+#Requests and checks if the asteroid is safe or hazardous
 if r.status_code == 200:
 
 	json_data = json.loads(r.text)
 
 	ast_safe = []
 	ast_hazardous = []
-
+#Counts and shows asteroid amount in the day
 	if 'element_count' in json_data:
 		ast_count = int(json_data['element_count'])
 		print("Asteroid count today: " + str(ast_count))
